@@ -40,10 +40,10 @@ public class RobotClass extends SimpleRobot {
     
     
     public void autonomous() {
-        gyro.reset(); //restets gyro to forward
+        gyro.reset(); //resets gyro to forward
         chassis.setSafetyEnabled(false); // it is a safety mechanism that will stop the motor if the speed isn't updated
         while (isAutonomous()) { //creates while loop
-            double angle = gyro.getAngle(); //retrevies angle that the gyro is reading 
+            double angle = gyro.getAngle(); //retrieves angle that the gyro is reading 
             chassis.drive(0.3, -angle*Kp);//adjusts angle of drive to correct inefficiencies in the motors
             Timer.delay(0.004); 
         }
