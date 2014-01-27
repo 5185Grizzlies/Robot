@@ -20,7 +20,8 @@ import edu.wpi.first.wpilibj.Gyro;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class RobotClass extends SimpleRobot {
+public class RobotClass extends SimpleRobot 
+{
     //This function is called once each time the robot enters autonomous mode.
     private Gyro gyro; //creating the object gyro
     double Kp = 0.03; //proportional scaling constant, the angle is multiplied by 0.03 to correct its path
@@ -39,10 +40,12 @@ public class RobotClass extends SimpleRobot {
      Joystick driveStick = new Joystick(1);
     
     
-    public void autonomous() {
+    public void autonomous() 
+    {
         gyro.reset(); //resets gyro to forward
         chassis.setSafetyEnabled(false); // it is a safety mechanism that will stop the motor if the speed isn't updated
-        while (isAutonomous()) { //creates while loop
+        while (isAutonomous()) 
+        { //creates while loop
             double angle = gyro.getAngle(); //retrieves angle that the gyro is reading 
             chassis.drive(0.3, -angle*Kp);//adjusts angle of drive to correct inefficiencies in the motors
             Timer.delay(0.004); 
@@ -58,12 +61,14 @@ public class RobotClass extends SimpleRobot {
     /**
      * This function is called once each time the robot enters operator control.
      */
-    public void operatorControl() {
+    public void operatorControl() 
+    {
         chassis.setSafetyEnabled(true); //enables safety
         //chassis.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true); //inverts motors so that they don't fight each other.
         //chassis.setInvertedMotor(RobotDrive.MotorType.etX()); //get the inputs from left & rigt stick
             Timer.delay(0.01); //update every 0.01 secondskFrontLeft, true); 
-        while (isOperatorControl() && isEnabled()) { //while loop for re-updating speed and such
+        while (isOperatorControl() && isEnabled()) 
+        { //while loop for re-updating speed and such
             chassis.arcadeDrive(-driveStick.getY(),-driveStick.getX()); //get the inputs from left & rigt stick
             Timer.delay(0.01); //update every 0.01 seconds
         } 
@@ -73,7 +78,8 @@ public class RobotClass extends SimpleRobot {
     /**
      * This function is called once each time the robot enters test mode.
      */
-    public void test() {
+    public void test() 
+    {
     
     }
 }
