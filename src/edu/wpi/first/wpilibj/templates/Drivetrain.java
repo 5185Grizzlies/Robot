@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.Gyro;
 
 
-public class RobotTemplate extends SimpleRobot 
+public class Drivetrain extends SimpleRobot 
 {
     
     private Gyro gyro; //creating the object gyro
@@ -24,7 +24,7 @@ public class RobotTemplate extends SimpleRobot
     double Kp = 0.006;
     
     
-    public RobotTemplate()
+    public Drivetrain()
     { 
         gyro = new Gyro(1);
         chassis.setExpiration(0.1);
@@ -37,7 +37,7 @@ public class RobotTemplate extends SimpleRobot
     Victor backLeft = new Victor(2);
     
     RobotDrive chassis = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
-     Joystick driveStick = new Joystick(1);
+    public Joystick driveStick = new Joystick(1);
     
     
     public void autonomous() 
@@ -67,17 +67,29 @@ public class RobotTemplate extends SimpleRobot
      */
     public void operatorControl()
     {
-        chassis.setSafetyEnabled(true); //enables safety
+        chassis.setSafetyEnabled(false); //enables safety
         
         //while loop for re-updating speed and such
         while (isOperatorControl() && isEnabled()) 
         {
             //get the inputs from left & rigt stick
             //chassis.arcadeDrive(-driveStick.getY(),-driveStick.getX()); 
-            chassis.drive(0,0);
-            System.out.println("Magnatude " + driveStick.getMagnitude());
-            System.out.println("Get X " + driveStick.getX());
-            System.out.println("Get Y"+ driveStick.getY());
+            
+            //----------Crazy joystick code starts here------------------//
+            double joyTwist = driveStick.getTwist();
+            double joyX = driveStick.getX();
+            double joyY = driveStick.getY();
+            
+            if(driveStick.getRawButton(7) == true){
+               // activate the slonoid to fire the ball (AMY)
+            }
+        
+            if (driveStick.getRawButton(8) == true){
+                //activate motor 5 to retract the arm
+            }
+            
+            
+            }
             
             Timer.delay(2.001); //update every 0.001 seconds
             
