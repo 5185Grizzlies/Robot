@@ -85,10 +85,7 @@ public class Drivetrain extends SimpleRobot
             }
         
             if (driveStick.getRawButton(8) == true){
-                //activate motor 5 to retract the arm
-            }
-            
-            
+                //activate motor 5 to retract the arm 
             }
             
             Timer.delay(2.001); //update every 0.001 seconds
