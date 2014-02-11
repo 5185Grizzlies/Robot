@@ -7,101 +7,30 @@
 
 package edu.wpi.first.wpilibj.templates;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.SimpleRobot;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.RobotDrive;
 
-
-public class Drivetrain extends SimpleRobot 
+public class Drivetrain 
 {
+    private RobotDrive chassis;
+    private Motors driveMotors;
     
     private Gyro gyro; //creating the object gyro
     //proportional scaling constant, the angle is 
     //multiplied by 0.06 to correct its path
-    double Kp = 0.006;
+    private double Kp = 0.006;
     
-    
-    public Drivetrain()
+    public void Init()
     { 
         gyro = new Gyro(1);
+        driveMotors = new Motors();
+        chassis = new RobotDrive(driveMotors.GetFrontRight(),
+                driveMotors.GetFrontLeft(),driveMotors.GetBackRight(),
+                driveMotors.GetBackLeft());
         chassis.setExpiration(0.1);
     }
     
-    //set which motor is hooked up to which port.
-    Victor frontRight = new Victor(3); 
-    Victor frontLeft = new Victor(1);
-    Victor backRight = new Victor(4);
-    Victor backLeft = new Victor(2);
     
-    RobotDrive chassis = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
-    public Joystick driveStick = new Joystick(1);
-    
-    
-    public void autonomous() 
-    {
-       int i = 0;
-        gyro.reset(); //resets gyro to forward
-        
-        //safety mechanism that will stop the motor if the speed isn't updated
-        chassis.setSafetyEnabled(false);
-        
-        while (isAutonomous() && isEnabled()) 
-        { 
-            //retrieves angle that the gyro is reading
-            double angle = gyro.getAngle();
-            //adjusts angle of drive to correct inefficiencies in the motors
-            chassis.drive(0.5, -angle*Kp);
-
-            System.out.println("ticks = " + i++);
-           // System.out.println("Kp Angle = " + -angle*Kp);
-            Timer.delay(0.004); 
-        }
-        chassis.drive(0.0, 0.0);//stops robot
-    }
-
-    /**
-     * This function is called once each time the robot enters operator control.
-     */
-    public void operatorControl()
-    {
-        chassis.setSafetyEnabled(false); //enables safety
-        
-        //while loop for re-updating speed and such
-        while (isOperatorControl() && isEnabled()) 
-        {
-            //get the inputs from left & rigt stick
-            //chassis.arcadeDrive(-driveStick.getY(),-driveStick.getX()); 
-            
-            //----------Crazy joystick code starts here------------------//
-            double joyTwist = driveStick.getTwist();
-            double joyX = driveStick.getX();
-            double joyY = driveStick.getY();
-            
-            if(driveStick.getRawButton(7) == true){
-               // activate the slonoid to fire the ball (AMY)
-            }
-        
-            if (driveStick.getRawButton(8) == true){
-                //activate motor 5 to retract the arm 
-            }
-            
-            Timer.delay(2.001); //update every 0.001 seconds
-            
-            //Joystick buttons corrispond to the labels thay have on the joystick. I checked.
-            //Joystick button 1 is also mapped as .getTrigger().
-            //Joystick getTwist() value range: left -1.0, neutral 0.0, right 1.0
-        } 
- 
-    }
-    
-    /**
-     * This function is called once each time the robot enters test mode.
-     */
-    public void test() 
-    {
-    
-    }
+  
 }
